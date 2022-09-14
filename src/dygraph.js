@@ -2238,8 +2238,8 @@ Dygraph.prototype.gatherDatasets_ = function(rolledSeries, dateWindow) {
     }
 
     var seriesName = this.attr_("labels")[seriesIdx];
-    const tubes = this.attr_("tubes")[serialIdx];
-    console.log({ serialIdx, tubes });
+    const tubes = this.attr_("tubes")[seriesIdx];
+    console.log({ seriesIdx, tubes });
 
     var seriesExtremes = this.dataHandler_.getExtremeYValues(series,
         dateWindow, this.getBooleanOption("stepPlot",seriesName));

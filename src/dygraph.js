@@ -2147,6 +2147,11 @@ Dygraph.stackPoints_ = function(
   }
 };
 
+const minMax = (tube, dateWindow, initValues) => tube.data
+  .filter((_, i) => {
+    const ts = tube.start + i * tube.interval;
+    return ts >= dateWindow[0] && ts < dateWindow[1];
+  }).reduce(([min, max], values) => [Math.min(...values, min), Math.max(...values, max)], initValues);
 
 /**
  * Loop over all fields and create datasets, calculating extreme y-values for
@@ -2238,11 +2243,11 @@ Dygraph.prototype.gatherDatasets_ = function(rolledSeries, dateWindow) {
     }
 
     var seriesName = this.attr_("labels")[seriesIdx];
-    const tubes = this.attr_("tubes")[seriesIdx];
-    console.log({ seriesIdx, tubes });
-
-    var seriesExtremes = this.dataHandler_.getExtremeYValues(series,
+    var seriesExtremes0 = this.dataHandler_.getExtremeYValues(series,
         dateWindow, this.getBooleanOption("stepPlot",seriesName));
+
+    const tube = this.getOption("tube", seriesName);
+    var seriesExtremes = tube ? minMax(tube, this.xAxisRange(), seriesExtremes0) : seriesExtremes0;
 
     var seriesPoints = this.dataHandler_.seriesToPoints(series,
         seriesName, boundaryIds[seriesIdx-1][0]);

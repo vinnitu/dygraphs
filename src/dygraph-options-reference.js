@@ -564,11 +564,11 @@ OPTIONS_REFERENCE =  // <JSON>
     "type": "float",
     "description": "When errorBars is set, shade this many standard deviations above/below each point."
   },
-  "tubes": {
-    "default": [],
+  "tube": {
+    "default": "null",
     "labels": ["Error Bars"],
-    "type": "array<object>",
-    "description": "table errorBars on each series"
+    "type": "Object",
+    "description": "table errorBars per series"
   },
   "customBars": {
     "default": "false",
